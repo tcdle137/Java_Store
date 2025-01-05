@@ -1,0 +1,326 @@
+// ---------------------------------S-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+// UNUSED CODE
+
+/*
+// READ FROM A FILE INTO THE ARRAYLIST
+Product fromFile;
+String code;
+String name;
+String des;
+String priceStr;
+int charReadInt = 0;
+
+// OPEN FILE
+FileReader file = null;
+try 
+{
+	file = new FileReader("Inventory.txt");
+	//System.out.println("File found!!");
+} catch (FileNotFoundException  fe)
+{
+	System.out.println("File not found");
+}
+
+// READ CONTENTS TO INVENTORY ARRAYLIST
+while (charReadInt != -1)
+{
+	code = "";
+	name = "";
+	des = "";
+	priceStr = "";
+	while ( (charReadInt = file.read()) != '\r' && charReadInt != '\t' && charReadInt != -1)
+	{
+		code += (char)charReadInt;	
+	}
+	while ( (charReadInt = file.read()) != '\r' && charReadInt != '\t'  && charReadInt != -1)
+	{
+		name += (char)charReadInt;	
+	}
+	while ( (charReadInt = file.read()) != '\r' && charReadInt != '\t'  && charReadInt != -1)
+	{
+		des += (char)charReadInt;	
+	}
+	while ( (charReadInt = file.read()) != '\r' && charReadInt != '\t'  && charReadInt != -1)
+	{
+		priceStr += (char)charReadInt;	
+	}
+	// ADD TO INVENTORY ARRAY LIST
+	fromFile = new Product(code, name, des, Double.parseDouble(priceStr));
+	Inventory.add(fromFile);
+	// PASS THE NEW LINE FOR NEXT PRODUCT
+	file.read();
+}
+
+// CLOSE THE FILE
+file.close();	
+*/
+//-------------------------------------------------------------------------------------------------
+/*
+String name = "";
+
+// OPEN FILE
+FileReader file = null;
+try 
+{
+	file = new FileReader("Inventory.txt");
+	//System.out.println("File found!!");
+} catch (FileNotFoundException  fe)
+{
+	System.out.println("File not found");
+}
+
+// FIND USER'S NAME
+
+return name;
+*/
+//-------------------------------------------------------------------------------------------------
+/*
+public static void enterNewProducts(Scanner input)
+{
+	final String ADMIN_PASSWORD = "MCS3603";
+	String responseStr;
+	double responseD = 0.0;
+	int passwordAttempts = 0;
+	boolean test1 = true, test2 = true, passTest = true, done = false;
+	
+	System.out.println("Please enter the admin password if you would like to edit the Inventory:");
+	System.out.println("\t*** To continue to the program please enter -1 ****");
+	responseStr = input.nextLine();
+	while (!responseStr.equals(ADMIN_PASSWORD) && !responseStr.equals("-1"))
+	{
+		
+		++passwordAttempts;
+		// ALLOW ONLY 7 ATTEMPTS FOR PASSWORD
+		if (passwordAttempts == 7)
+		{
+			System.out.println("Too many password attempts, continuing to store.");
+			passTest = false;
+			break;
+		}
+		System.out.println("Incorrect password, please try again:");
+		responseStr = input.nextLine();
+	}
+	// CHECK FOR TOO MANY PASSWORD ATTMEPTS OR -1 INPUT
+	if (!passTest || responseStr.equals("-1"))
+	{
+		// LEAVE enterNewProduct() FUNCTION
+		return;
+	}
+	
+	// MAIN ADD NEW PRODUCT DO-WHILE LOOP
+	do
+	{
+		// RESET VARIABLES
+		Product temp = new Product();
+		responseStr = "";
+		responseD = 0.0;
+		test1 = true; test2 = true;
+		
+		// ASK USER IF THEY ARE DONE
+		System.out.println("\nWould you like to enter more products into the inventory?");
+		System.out.println("Please enter Y for yes and N for no:");
+		responseStr = input.nextLine();
+		while (!responseStr.equals("Y") && !responseStr.equals("N"))
+		{
+			System.out.println("Please ONLY enter Y or N:");
+			responseStr = input.nextLine();
+		}
+		// END FUNCTION IF USER IS DONE 
+		if (responseStr.equals("N"))
+		{
+			done = true;
+			break;
+		}
+		
+		// INPUT PRODUCT CODE
+		System.out.println("\nPlease input the Product Code:");
+		System.out.println("The Product Code must be four numbers and not be the same as previous Product Codes.");
+		// INPUT VALIDATION
+		// ALL BOOL TEST VALUES MUST BE TRUE IN ORDER FOR THE VALIDATION TO PASS
+		do
+		{	
+			// RESET TEST VARIABLES
+			test1 = true; test2 = true;
+			// GET USER INPUT
+			responseStr = input.nextLine();
+			// TEST FOR ALL NUMBERS
+			do
+			{
+				try 
+				{
+					Integer.parseInt(responseStr);
+					// LEAVE TEST1 WHILE LOOP IF NOT ERROR WAS CAUGHT
+					break;
+				} catch(NumberFormatException e)
+				{
+					test1 = false;
+				}
+			} while (test1);
+			
+			// TEST FOR REPEATED PRODUCT CODE
+			for (Product I : Inventory)
+			{
+				if (responseStr.equals(I.getCode()))
+				{
+					test2 = false;
+					// LEAVE THE FOR LOOP
+					break;
+				}
+			}
+			// VALIDAITON OUTPUT IF ONE OR MORE ARE NOT TRUE
+			// ALL CHAR ARE NUM, REPEATED PROD CODE, AND LENGTH = 4
+			if (!(test1 && test2 && responseStr.length() == 4))
+			{
+				if (!test1)
+				{
+					System.out.println("The Product Code must consist only of numbers.");
+				}
+				if (!test2)
+				{
+					System.out.println("The Product Code must not be shared with any other products.");
+				}
+				if (responseStr.length() != 4)
+				{
+					System.out.println("The Product Code must be exactly 4 numbers.");
+				}
+				System.out.println("Please try again:");
+			}
+		} while (!(test1 && test2 && responseStr.length() == 4));
+		temp.setCode(responseStr);
+		
+		
+		// INPUT PRODUCT PRICE
+		System.out.println("Please input the Product Price:");
+		do
+		{
+			// ONLY NUMBER VALIDATION
+			do
+			{
+				try {
+					responseStr = input.nextLine();
+					responseD = Double.parseDouble(responseStr);
+					break;
+				} catch (Exception e)
+				{
+					System.out.println("Please only input numbers.");
+				}
+			} while (true);
+			
+			// ERROR MESSAGE FOR NEGATIVE AND SUPER LARGE NUMBERS
+			if (responseD <= 0)
+			{
+				System.out.println("Please enter a price that is higher than 0.");
+			}
+			if (responseD > 99999999.99)
+			{
+				System.out.println("Please enter a reasonable number. (cmon u cant be THAT greedy)");
+			}
+		} while (!(responseD > 0 && responseD <= 99999999.99));
+		temp.setPrice(responseD);
+		
+		// INPUT PRODUCT NAME
+		System.out.println("Please input the Product Name:");
+		responseStr = "";
+		responseStr = input.nextLine();
+		temp.setName(responseStr);
+		
+		// INPUT PRODUCT DESCRIPTION
+		System.out.println("Please input the Product Description:");
+		responseStr = "";
+		responseStr = input.nextLine();
+		temp.setDescription(responseStr);
+		
+		// ADD TO INVENTORY
+		Inventory.add(temp);
+	} while (!done);
+}
+*/
+//----------------------------------------------------------------------------------------------------------------
+		/*
+		JPanel inner = new JPanel();
+		JLabel header = new JLabel();
+		JLabel footer = new JLabel();
+		JLabel items;
+		JLabel totals = new JLabel();
+		
+		String text;
+		
+		
+		
+		
+		// SETTING UP THE HEADER
+		header.setForeground(mainDarkBlue);
+		header.setHorizontalAlignment(JTextField.CENTER);
+		header.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+		text = String.format("<html>Hi %s!<br/><br/>*~~-~~*~~-~~*<br/>Thank you for shopping at<br/>The Trading Card Store</html>", customerName);
+		header.setText(text);
+		
+		// SETTING UP THE MIDDLE GRID FOR PRODUCTS BOUGHT
+		int count = 0;
+		for (Product I : Inventory)
+		{
+			if (I.getCount() != 0 )
+			{
+				++count;
+			}
+		}
+		inner.setLayout(new GridLayout(count, 1));
+		// ADD TO THE INNER GRID
+		for (Product I: Inventory)
+		{
+			if (I.getCount() > 0 )
+			{
+				// FOR THE ITEM 
+				items = new JLabel();
+				items.setForeground(mainDarkBlue);
+				items.setHorizontalAlignment(JTextField.LEFT);
+				items.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+				text = String.format("<html>%s%-40s$%d x $%.2f<br/></html>", I.getCode(), I.getName(), I.getCount(), I.getPrice());
+				if (I.getCount() >= 10)
+				{
+					text += String.format("<html>%50s<br/>%48s$%.2f</html>", "10% disc. for >= 10 items", "", I.getCount()*I.getPrice() - get2Decimals(I.getCount()*I.getPrice()*0.1));
+					subtotal += I.getCount()*I.getPrice() - get2Decimals(I.getCount()*I.getPrice()*0.1);
+				}
+				else
+				{
+					text += String.format("<html>%48s$%.2f</html>", "", I.getCount()*I.getPrice());
+					subtotal += I.getCount()*I.getPrice();
+				}
+				items.setText(text);
+				inner.add(items);
+			}
+		}
+		
+		// SETTING UP THE TOTALS
+		totals.setForeground(mainDarkBlue);
+		totals.setHorizontalAlignment(JTextField.LEFT);
+		totals.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+		text = "";
+		if (payInFull)
+		{
+			text += String.format("<html>5% Discount for payment in full.<br/>%-20s$%.2f<br/></html>", "Previous Subtotal:", subtotal); 
+			text += String.format("<html>%-20s<br/><br/></html>", "Savings:", get2Decimals(subtotal*0.05));
+			subtotal -= get2Decimals(subtotal*0.05);
+		}
+		text += String.format("<html>%-20s$%.2f<br/></html>", "Subtotal:", subtotal);
+		text += String.format("<html>%-20s$%.2f<br/></html>", "Tax:", get2Decimals(subtotal * 0.06));
+		subtotal += get2Decimals(subtotal * 0.06);
+		text += String.format("<html>%-20s$%.2f<html>", "Final Total:", subtotal);
+		totals.setText(text);
+		
+		// SETTING UP THE FOOTER
+		footer.setForeground(mainDarkBlue);
+		footer.setHorizontalAlignment(JTextField.CENTER);
+		footer.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+		text = String.format("<html>.~~-~~.~~-~~.<br/><br/>Thank you for shopping at The Trading Card Store!<br/>Please come again soon</html>");
+		footer.setText(text);
+		
+		// ADD ALL TO FRAME
+		receipt.setLayout(new GridLayout(4,1));
+		receipt.add(header);
+		receipt.add(inner);
+		receipt.add(totals);
+		receipt.add(footer);
+		*/
