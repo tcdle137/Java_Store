@@ -1,0 +1,20 @@
+0001
+Pokemon Booster Pack
+10 randomly selected Pokemon Cards that may contain cards of Common, Uncommon, Rare, Foil, Holographic, Reverse Holographic, or Energy varieties.
+4.99
+0010
+Pokemon Booster Box
+36 sealed Pokemon Booster Packs, totaling 360 individual Pokemon sards.
+169.99
+0011
+One Piece TCG Booster Pack
+12 randomly selected One Piece TCG cards that may contain cards of Common, Uncommon, Rare, Super Rare, Secret Rare, Manga Rare, or Leader varieties.
+4.59
+0100
+One Piece TCG Booster Box
+24 sealed One Piece TCG Booster Packs, totaling 288 individual One Piece TCG cards.
+99.99
+0101
+One Piece TCG Booster Case
+12 sealed One Piece TCG Booster Boxes, each with 24 sealed One Piece TCG Booster Packs, totaling 3456 individual One Piece TCG cards.
+1099.99
